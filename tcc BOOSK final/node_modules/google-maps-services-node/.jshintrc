@@ -1,0 +1,11 @@
+{
+    "node": true,
+    "undef": true,
+    "indent": 4,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "quotmark": true,
+    "unused": true,
+    "strict": true
+}

@@ -1,0 +1,42 @@
+<%- include('head'); %>
+
+    <body>
+        <div class="wrapper">
+            <%- include('menu_lateral', { dadosUsuario: dadosUsuario }); %>
+                <div id="content">
+                    <%- include('navbar'); %>
+                        <section
+                            style="background-color: #42ebcc; padding: 5px; display: flex; justify-content: center; align-items: center;height: 78%; ">
+                            <div class="container mt-1 form-container-produto">
+                                <h2>Cadastro de Produtos</h2>
+                                <form action="/usuario01/cadastroProduto" enctype="multipart/form-data" method="POST">
+                                    <div class="form-group">
+                                        <label for="categoria">Categoria:</label>
+                                        <select class="form-control" id="categoria" name="categoria">
+                                            <% dadosProduto.forEach(function(dados) { %>
+                                                <option value="<%= dados.nm_categoria %>"><%= dados.nm_categoria %></option > 
+                                            <% }) %>
+                                        </select required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="descricao">DescriÃ§Ã£o:</label>
+                                        <textarea class="form-control" id="descricao" name="descricao"
+                                            rows="4" placeholder="Descreva seu produto" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="preco">PreÃ§o:</label>
+                                        <input type="text" class="form-control" id="preco" name="preco" placeholder="Digite o preÃ§o" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="imagem">Imagem:</label>
+                                        <input type="file" name="imagem" class="form-control" required>
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-outline-light">Cadastrar  <i class="fas fa-plus"></i></button>
+                                </form>
+                            </div>
+
+                            <%- include('script'); %>
+    </body>
+
+    </html>

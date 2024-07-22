@@ -1,0 +1,152 @@
+<%- include('head'); %>
+  <style>
+    .card {
+      width: 300px;
+      max-height: 450px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .card-title {
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .card-address {
+      font-size: 14px;
+      color: #888;
+
+    }
+
+    .card-button {
+      display: block;
+      text-decoration: none;
+      background-color: #42ebcc;
+      color: black;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: auto;
+    }
+
+    .card-button:hover {
+      background-color: #0FAE8D;
+      color: #fff;
+      transform: scale(1.05);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .scrollable-section {
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+      max-height: 720px;
+      overflow-y: auto;
+      padding: 20px;
+    }
+  </style>
+
+  <body>
+    <div class="wrapper">
+      <%- include('menu_lateral'); %>
+        <div id="content">
+          <%- include('navbar'); %>
+            <section
+              style="background-color: #42ebcc; padding: 20px; display: flex; justify-content: center; align-items: center;height: 78%; ">
+              <div style="width: 85%;">
+                <div class="row mb-3">
+                  <div class="col-md-7 mr-auto ml-3 mt-auto">
+                    <div class="row">
+                      <h3>Estabelecimentos cadastrados:</h3>
+                    </div>
+                  </div>
+                </div>
+                <div class="scrollable-section" style="max-height: 580px; overflow-y: auto;">
+                  <% if (Array.isArray(dadosEst) && dadosEst.length===0) { %>
+                    <div class="row ml-auto mb-4">
+                      <form action="/usuario01/filtraCidade" method="POST" class="form-inline mr-auto">
+                        <div class="input-group">
+                          <input name="cidadeEst" class="form-control mr-sm-2" type="text"
+                            placeholder="Filtrar por cidade" required>
+                          <div class="input-group-append">
+                            <button type="reset" class="btn btn-outline-light"><i class="fas fa-times"></i></button>
+                          </div>
+                          <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-light ml-2"><i
+                                class="fas fa-search"></i></button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="alert alert-warning" role="alert">
+                      <strong>Aviso:</strong> Nenhum estabelecimento cadastrado atÃ© o momento!
+                    </div>
+                    <% } else { %>
+                      <div class="row ml-auto mb-4">
+                        <form action="/usuario01/filtraCidade" method="POST" class="form-inline mr-auto">
+                          <div class="input-group">
+                            <input name="cidadeEst" class="form-control mr-sm-2" type="text"
+                              placeholder="Filtrar por cidade" required>
+                            <div class="input-group-append">
+                              <button type="reset" class="btn btn-outline-light"><i class="fas fa-times"></i></button>
+                            </div>
+                            <div class="input-group-append">
+                              <button type="submit" class="btn btn-outline-light ml-2"><i
+                                  class="fas fa-search"></i></button>
+                            </div>
+                            
+                          </div>
+                        </form>
+                      </div>
+                      <div class="row ml-auto">
+                        <% if (typeof cidade !== 'undefined') { %>
+                              <div class="row mr-auto ml-2">
+                                <p style="font-size: 20px;"><i class="fas fa-map-marker-alt"></i> 
+                                <%=cidade%></p>
+                              </div>
+                            <% } %>
+                      </div>
+                      <div class="row mr-2">
+
+                        <% dadosEst.forEach(function(dados) { %>
+                          <div class="card mx-2" style="box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+                      border: 4px solid #10BD93; width:200px">
+			                <% if (dados.img_perfil) { %>
+                        	<img src="/usuario01/imagens/<%=dados.img_perfil %>" alt="Estabelecimento" class="card-image">
+                    	<% } else { %>
+                        	<img src="/usuario01/imagens/SemFoto.png" alt="Estabelecimento" class="card-image">
+                    	<% } %>
+                            
+                            <div class="card-content mt-auto">
+                              <h2 class="card-title">
+                                <%=dados.nm_estabelecimento %>
+                              </h2>
+                              <p class="card-address">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <%=dados.local %>
+                              </p>
+                            </div>
+                            <a href="/usuario01/mostraProduto/<%=dados.id_estabelecimento%>" class="card-button">Ver Produtos</a>
+                          </div>
+                          <% }); %>
+                            <% } %>
+
+                      </div>
+                </div>
+              </div>
+            </section>
+        </div>
+    </div>
+    <%- include('script'); %>
+  </body>
+
+  </html>

@@ -1,0 +1,181 @@
+<%- include('head'); %>
+    <style>
+        .scrollable-section {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .custom-card {
+            width: 400px;
+            max-height: 500px;
+            border: 1px solid rgb(255, 255, 255);
+            border-radius: 5px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .custom-card .card-img- {
+            width: 110%;
+            padding: 10px;
+            padding-top: 20px;
+            height: 90%;
+        }
+	
+    </style>
+
+    <body>
+        <div class="wrapper">
+            <%- include('menu_lateral'); %>
+                <div id="content">
+                    <%- include('navbar'); %>
+                        <section
+                            style="background-color: #42ebcc; display: flex; justify-content: center; align-items: center; height: 78%;">
+                            <div style="width: 85%;">
+                                <div class="row mb-3">
+                                    <div class="col-md-4 mt-auto mb-2">
+                                        <div class="row ml-auto">
+                                            <a href="/usuario01/cadastroProdUsuario" class="btn btn-outline-light">
+                                                Fazer postagem <i class="fas fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 ml-auto mt-auto">
+                                        <div class="row">
+                                            <h3>Descubra preÃ§os de produtos atravÃ©s da comunidade</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="scrollable-section" style="max-height: 550px; overflow-y: auto;">
+                                    <% if (Array.isArray(dadosProduto) && dadosProduto.length===0) { %>
+                                        <div class="row ml-auto mb-4">
+                                            <form action="/usuario01/filtraCidade" method="POST" class="form-inline ml-4 mr-auto">
+                                              <div class="input-group">
+                                                <input name="cidadeForum" class="form-control mr-sm-2" type="text"
+                                                  placeholder="Filtrar por cidade" required>
+                                                <div class="input-group-append">
+                                                  <button type="reset" class="btn btn-outline-light"><i class="fas fa-times"></i></button>
+                                                </div>
+                                                <div class="input-group-append">
+                                                  <button type="submit" class="btn btn-outline-light ml-2"><i
+                                                      class="fas fa-search"></i></button>
+                                                </div>
+                                              </div>
+                                            </form>
+                                          </div>
+                                        <div class="alert alert-warning" role="alert">
+                                            <strong>Aviso:</strong> Nenhum produto foi publicado no fÃ³rum atÃ© o momento!
+                                        </div>
+                                    <% } else { %>
+                                        <div class="row ml-auto mb-4">
+                                            <form action="/usuario01/filtraCidade" method="POST" class="form-inline ml-4 mr-auto">
+                                              <div class="input-group">
+                                                <input name="cidadeForum" class="form-control mr-sm-2" type="text"
+                                                  placeholder="Filtrar por cidade" required>
+                                                <div class="input-group-append">
+                                                  <button type="reset" class="btn btn-outline-light"><i class="fas fa-times"></i></button>
+                                                </div>
+                                                <div class="input-group-append">
+                                                  <button type="submit" class="btn btn-outline-light ml-2"><i
+                                                      class="fas fa-search"></i></button>
+                                                </div>
+                                              </div>
+                                            </form>
+                                          </div>
+                                          <div class="row ml-auto">
+                                            <% if (typeof cidade !== 'undefined') { %>
+                                                  <div class="row mr-auto ml-4">
+                                                    <p style="font-size: 20px;"><i class="fas fa-map-marker-alt"></i> 
+                                                    <%=cidade%></p>
+                                                  </div>
+                                                <% } %>
+                                          </div>
+                                        <div class="row">
+                                        <% dadosProduto.forEach(function(dados) { %>
+                                            <div class="col-md-4">
+                                                <div class="card custom-card mb-4 produto" >
+                                                    <div class="row no-gutters" style="background-color: #10BD93;">
+                                                        <div class="col-md-5">
+                                                            <img src="../usuario01/imagens/<%= dados.img_produto %>"
+                                                                class="card-img-">
+                                                        </div>
+                                                        <div class="col-md-6 mt-3" style="margin-left: 15px;">
+								<% if (dados.img_perfil) { %>
+                        						<img src="../usuario01/imagens/<%=dados.img_perfil %>"
+                                                                	style="margin-right: auto;" class="rounded-circle"
+                                                                	height="30" loading="lazy" />
+                    						<% } else { %>
+                        						<img src="../usuario01/imagens/SemFoto.png"
+                                                                	style="margin-right: auto;" class="rounded-circle"
+                                                                	height="30" loading="lazy" />
+                    						<% } %>
+
+                                                                <%= dados.nm_usuario %>
+                                                                <p class="card-text mt-2" style="font-size: 15px;">
+                                                                    <%= dados.produto_descricao %>
+                                                                </p>
+                                                                <p class="card-price"
+                                                                    style="font-size: 20px;color: red; font-weight: bold;">
+                                                                    R$<%= dados.preco %>
+                                                                </p>
+                                                                <div
+                                                                    class="d-flex align-items-left card-footer mt-auto">
+                                                                    <p class="card-text mb-0" style="font-size: 13px;">
+                                                                        <i class="fas fa-map-marker-alt"></i>
+                                                                        <%= dados.local %>
+                                                                    </p>
+                                                                        <% if
+                                                                            (dados.id_usuario===req.session.userId)
+                                                                            { %>
+                                                                            <div class="dropdown dropright ml-auto">
+                                                                                <button
+                                                                                    class="btn btn-outline-light btn-sm dropdown"
+                                                                                    type="button"
+                                                                                    id="dropdownMenuButton"
+                                                                                    data-toggle="dropdown"
+                                                                                    aria-haspopup="true"
+                                                                                    aria-expanded="false">
+                                                                                    <i class="fas fa-ellipsis-h"></i>
+                                                                                </button>
+                                                                                <div class="dropdown-menu"
+                                                                                    aria-labelledby="dropdownMenuButton">
+                                                                                    <a class="dropdown-item"
+                                                                                        href="../usuario01/editaProduto/<%= dados.id_produto %>">
+                                                                                        <i class="fas fa-edit"></i>
+                                                                                        Editar
+                                                                                    </a>
+                                                                                    <a class="dropdown-item"
+                                                                                        href="../usuario01/excluirProduto/<%= dados.id_produto %>">
+                                                                                        <i class="fas fa-trash-alt"></i>
+                                                                                        Excluir
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                            <% } else { %>
+                                                                                <% } %>
+
+                                                                </div>
+                                                                <p style="font-size: 12px;margin-top: 5px;">
+                                                                    <%= dados.data_formatada %>
+                                                                </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }) %>
+                                    </div>
+                                    <% } %>
+                                    
+                                </div>
+                            </div>
+
+                        </section>
+                </div>
+        </div>
+        <%- include('script'); %>
+    </body>
+
+    </html>

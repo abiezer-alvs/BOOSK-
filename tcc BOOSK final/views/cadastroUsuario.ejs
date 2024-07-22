@@ -1,0 +1,99 @@
+
+<head>
+    <%- include('head'); %>
+        <style>
+            .btn-rounded:hover {
+                background-color: #0FAE8D;
+                color: #fff;
+                transform: scale(1.05);
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+
+            a:hover {
+                color: #0FAE8D;
+            }
+
+            .form-container {
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            body {
+                animation: gradientAnimation 10s infinite alternate;
+            }
+
+            .img-hover-scale {
+                transition: transform 0.3s ease;
+            }
+
+            .img-hover-scale:hover {
+                transform: scale(1.1);
+            }
+
+            .div2 {
+                position: absolute;
+                top: 135px;
+                left: 450px;
+                right: 1100px;
+                z-index: 2;
+            }
+        </style>
+</head>
+
+<body style="background-color: #10BD93; margin: 0; display: flex; justify-content: center; align-items: center;">
+        <div class="container d-flex align-items-center vh-100" style="background-color:#10BD93; height: 800px; ">
+            <div class="row  logo-container div2 " style="height: 70%; width: 520px; background-color: #6FFFE5;">
+                <div class="col-md-6 ">
+                    <h2>ConheÃ§a a:</h2>
+                    <img src="/usuario01/imagens/BOOSK.png" height="120px" width="250px" alt="Logo" class="logo img-hover-scale">
+                </div>
+            </div>
+            <div class="row justify-content-center logo-container div1"
+                style="height: 70%; width: 900px; margin-top: 100px; background-color: rgb(255, 255, 255); margin-left: 400px; margin-right: 115px; margin-bottom: 120px;">
+                <div class=" form-container" style="background-color: #6FFFE5; margin-left: 90px;">
+                    <% if(mensagem){%>
+                        <div class="alert alert-warning" role="alert">
+                            <%= mensagem %>
+                        </div>
+                        <%}%>
+                            <form action="/usuario01/cadastroUsuario" method="POST">
+                                <div class="form-group">
+                                    <label for="name">Nome:</label>
+                                    <input type="text" class="form-control" name="nome" placeholder="Nome"
+                                        style="border-radius: 50px;" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="usr">Email:</label>
+                                    <input type="Email" class="form-control" name="email" placeholder="E-mail"
+                                        style="border-radius: 50px;" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">Senha:</label>
+                                    <input type="password" class="form-control" name="senha" placeholder="Senha"
+                                        style="border-radius: 50px;" required minlength="7" pattern=".*\d.*"
+                                        title="A senha deve conter pelo menos um numero e ter no minimo 6 digitos" >
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado">Estado:</label>
+                                    <select class="form-control" style="border-radius: 50px;" id="estado" name="estado"></select required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cidade">Cidade:</label>
+                                    <select class="form-control" style="border-radius: 50px;" id="cidade" name="cidade"></select required>
+                                </div>
+                                <button type="submit" class="btn btn-rounded"
+                                    style="background-color: #10BD93;">Cadastrar</button>
+                                <div class="dropdown-divider" style="background-color: #000000;"></div>
+                                <p style="font-size: 14px;">Cadastro como estabelecimento? <a
+                                        href="/usuario01/cadastroEstabelecimento"
+                                        style="color: blue; text-decoration: none;">Cadastrar</a></p>
+                                <p style="font-size: 14px;">Ja possui uma conta? <a href="/usuario01/loginUsuario"
+                                        style="color: blue; text-decoration: none;">Login</a></p>
+
+                            </form>
+                </div>
+            </div>
+        </div>
+        <%- include('script'); %>
+</body>
+
+</html>

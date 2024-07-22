@@ -1,0 +1,111 @@
+
+<style>
+    .img-hover-scale:hover {
+        transform: scale(1.05);
+        transition: transform 0.2s ease;
+    }
+</style>
+
+<nav id="sidebar" >
+    <div class="sidebar-header">
+        <img src="../../usuario01/imagens/money.png" height="200px" width="200px" class="img-hover-scale">
+    </div>
+
+    <% if (dadosUsuario) { %>
+        <ul class="list-unstyled ">
+            <li>
+                <a href="../../usuario01/estabelecimentos">Mercados PrÃ³ximos</a>
+            </li>
+            <li>
+                <a href="../../usuario01/produtos">Estabelecimentos</a>
+            </li>
+            <li>
+                <a href="../../usuario01/salvos">Salvos</a>
+            </li>
+            <li>
+                <a href="../../usuario01/oferta">Ofertas</a>
+            </li>
+            <li>
+                <a href="../../usuario01/forum">FÃ³rum</a>
+            </li>
+        </ul>
+    <% } else { %>
+        <ul class="list-unstyled ">
+            <li>
+                <a href="../../usuario01/estabelecimentos">Mercados PrÃ³ximos</a>
+            </li>
+            <li>
+                <a href="../../usuario01/produtos">Estabelecimentos</a>
+            </li>
+            <li>
+                <a href="../../usuario01/oferta">Ofertas</a>
+            </li>
+            <li>
+                <a href="../../usuario01/cadastroProduto">Cadastrar produto</a>
+            </li>
+        </ul>
+    <% } %>
+    
+
+    <% if (dadosUsuario) { %>
+        <% dadosUsuario.forEach(function(dados) { %>
+            <div class="dropdown dropup" style="position: fixed; bottom: 15px;">
+                <a class="nav-link dropdown ml-auto" href="#dados" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <% if (dados.img_perfil) { %>
+                        <img src="../../usuario01/imagens/<%=dados.img_perfil%>"
+                        style="margin-right: auto;" class="rounded-circle" height="42"  loading="lazy" />
+                    <% } else { %>
+                        <img src="../../usuario01/imagens/SemFoto.png"
+                        style="margin-right: auto;" class="rounded-circle" height="42"  loading="lazy" />   
+                    <% } %>
+                    <%= dados.nm_usuario %>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="../../usuario01/editaUsuario">
+                        <i class="fas fa-user-edit"></i>  Editar Perfil
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+                    
+                    <a class="dropdown-item" href="../../usuario01/logout">
+                        <i class="fas fa-sign-out-alt"></i>  Logout
+                    </a>
+                </div>
+            </div>
+        <% }) %>
+    <% } else { %>
+        <% dadosEstabelecimento.forEach(function(dados) { %>
+            <div class="dropdown dropup" style="position: fixed; bottom: 15px;">
+                <a class="nav-link dropdown ml-auto" href="#dados" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <% if (dados.img_perfil) { %>
+                        <img src="../../usuario01/imagens/<%=dados.img_perfil%>"
+                        style="margin-right: auto;" class="rounded-circle" height="42"  loading="lazy" />
+                    <% } else { %>
+                        <img src="../../usuario01/imagens/SemFoto.png"
+                        style="margin-right: auto;" class="rounded-circle" height="42"  loading="lazy" />   
+                    <% } %> 
+                    <%= dados.nm_estabelecimento %>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="../../usuario01/editaEstabelecimento">
+                        <i class="fas fa-user-edit"></i>  Editar Perfil
+                    </a>
+                    <a class="dropdown-item" href="../../usuario01/produtoEstabelecimento">
+                        <i class="fas fa-list-ul"></i>  Meus produtos
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    
+                    <a class="dropdown-item" href="../../usuario01/logout">
+                        <i class="fas fa-sign-out-alt"></i>  Logout
+                    </a>
+                </div>
+            </div>
+        <% }) %>
+        
+    <% } %>
+
+        
+        
+</nav>

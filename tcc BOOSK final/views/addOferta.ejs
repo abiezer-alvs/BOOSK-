@@ -1,0 +1,35 @@
+<%- include('head'); %>
+
+    <body>
+        <div class="wrapper">
+            <%- include('menu_lateral'); %>
+                <div id="content">
+                    <%- include('navbar'); %>
+                        <section
+                            style="background-color: #42ebcc; padding: 5px; display: flex; justify-content: center; align-items: center;height: 720px; ">
+                            <div class="container mt-1 form-container-produto">
+                                <h2>Adicione uma oferta</h2>
+                                <% dadosProduto.forEach(function(dados) { %>
+                                    <form action="/usuario01/addOferta/<%= dados.id_produto %>" method="POST">
+                                        <div class="form-group">
+                                            <label for="preco">PreÃ§o:</label>
+                                            <input type="text" class="form-control" value="<%= dados.preco %>" id="preco" name="preco" disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="preco">PreÃ§o de oferta:</label>
+                                            <input type="text" class="form-control" id="oferta" name="oferta" placeholder="Digite o preÃ§o da oferta" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="data">DuraÃ§Ã£o da oferta:</label>
+                                            <input type="datetime-local" class="form-control" name="dataAlvo" >
+                                        </div>
+                                        <br>
+                                        <button type="submit" class="btn btn-outline-light">Editar  <i class="fas fa-user-edit"></i></button>
+                                    </form>
+                                <% }) %>
+                            </div>
+
+                            <%- include('script'); %>
+    </body>
+
+    </html>

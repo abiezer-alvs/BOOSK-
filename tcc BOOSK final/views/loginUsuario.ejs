@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <%- include('head'); %>
+        <style>
+            .btn-rounded:hover {
+                background-color: #0FAE8D;
+                color: #fff;
+                transform: scale(1.05);
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+
+            a:hover {
+                color: #0FAE8D;
+            }
+
+            .form-container {
+                margin-left: auto;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                padding: 2rem;
+            }
+
+            body {
+                animation: gradientAnimation 10s infinite alternate;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .img-hover-scale {
+                transition: transform 0.3s ease;
+            }
+
+            .img-hover-scale:hover {
+                transform: scale(1.1);
+            }
+
+            .container {
+
+                display: flex;
+                background-color: #6FFFE5;
+                border-radius: 30px;
+                overflow: hidden;
+                max-width: 1000px;
+            }
+
+            .image {
+                flex: 1;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .image img {
+                max-width: 50%;
+                height: auto;
+            }
+
+            .form {
+                width: 700px;
+                flex: 1;
+                text-align: left;
+                padding: 20px;
+            }
+
+            .form form {
+                max-width: 100%;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 1rem;
+            }
+
+            input {
+                width: 100%;
+                padding: 0.5rem;
+                margin-bottom: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            button {
+                background-color: #10BD93;
+                color: #fff;
+                padding: 0.5rem 1rem;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+        </style>
+</head>
+
+<body style="background-color:#10BD93;">
+    <div class="container">
+        <div class="image">
+            <h2>Conhe&ccedil;a a:</h2>
+            <img src="/usuario01/imagens/BOOSK.png" alt="Logo" class="logo img-hover-scale">
+        </div>
+        <div class="form">
+            <% if(mensagem){%>
+                <div class="alert alert-danger" role="alert">
+                    <%= mensagem %>
+                </div>
+                <br>
+                <%}%>
+                    <div class="form-container" style="background-color: white;">
+                        <div class="col-md-10 form-container" style="background-color: #6FFFE5; margin-right: auto;">
+                            <form action="/usuario01/loginUsuario" method="POST">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" name="email" class="form-control" id="email"
+                                        style="border-radius: 50px;" placeholder="Digite seu email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="senha" class="form-label">Senha</label>
+                                    <input type="password" name="senha" class="form-control" id="senha"
+                                        style="border-radius: 50px;" placeholder="Digite sua senha">
+                                </div>
+                                <button type="submit" class="btn btn-rounded"
+                                    style="background-color: #10BD93;">Login</button>
+                                <div class="dropdown-divider" style="background-color: #000000;"></div>
+                                <p style="font-size: 14px;">NÃ£o possui uma conta? <a href="/usuario01/cadastroUsuario"
+                                        style="color: blue; text-decoration: none;">Cadastrar</a></p>
+                                <p style="font-size: 14px;">Login como estabelecimento? <a
+                                        href="/usuario01/loginEstabelecimento"
+                                        style="color: blue; text-decoration: none;">Login</a></p>
+
+                            </form>
+
+                        </div>
+                    </div>
+        </div>
+    </div>
+    <%- include('script'); %>
+</body>
+
+</html>

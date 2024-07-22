@@ -1,0 +1,147 @@
+<%- include('head'); %>
+  <style>
+    #map {
+      height: 550px;
+      width: 100%;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.4);
+      border: 4px solid #10BD93;
+    }
+
+    .card-button {
+      display: block;
+      width: 100px;
+      text-decoration: none;
+      background-color: #42ebcc;
+      color: black;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: auto;
+    }
+
+    .card-button:hover {
+      background-color: #0FAE8D;
+      color: #fff;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+  </style>
+
+
+
+  <body>
+    <div class="wrapper">
+      <%- include('menu_lateral'); %>
+        <div id="content">
+          <%- include('navbar'); %>
+            <section style="background-color: #42ebcc; padding: 1px; height: 78%;">
+              <div class="container-fluid">
+                <div class="container mt-5 mb-4">
+                  <h2 class="text-left">Encontre estabelecimentos pr&oacute;ximos a voc&ecirc;</h2>
+                  <br>
+                  <div class="row justify-content-left ml-1">
+                    <p>
+                    <div id="map"></div>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+        </div>
+    </div>
+    <script>
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+        });
+
+        let previousInfoWindow = null;
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position) => {
+            const userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+
+            const userMarker = new google.maps.Marker({
+              map: map,
+              position: userLocation,
+              title: 'Sua Localização',
+              icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+            });
+
+            const infowindow = new google.maps.InfoWindow({
+              content: 'Voc&ecirc; est&aacute; aqui!',
+            });
+
+            userMarker.addListener('click', function () {
+              if (previousInfoWindow) {
+                previousInfoWindow.close();
+              }
+
+              infowindow.open(map, userMarker);
+              previousInfoWindow = infowindow;
+
+            });
+
+            map.setCenter(userLocation);
+
+            fetch('/usuario01/dadosEstabelecimentos')
+              .then((response) => response.json())
+              .then((data) => {
+                data.forEach((estabelecimento) => {
+                  const nome = estabelecimento.nm_estabelecimento;
+                  const endereco = estabelecimento.local;
+                  const imagemPerfil = estabelecimento.img_perfil;
+
+                  const geocoder = new google.maps.Geocoder();
+                  geocoder.geocode({ address: endereco }, function (results, status) {
+                    if (status === 'OK' && results[0].geometry) {
+                      const location = results[0].geometry.location;
+
+                      const marker = new google.maps.Marker({
+                        map: map,
+                        position: location,
+                        title: nome,
+                      });
+
+                      const infowindow = new google.maps.InfoWindow({
+                        content: `
+                        <div style="display: flex; align-items: center;">
+                          <div style="margin-right: 10px;">
+                             <img src="${imagemPerfil ? `/usuario01/imagens/${imagemPerfil}` : '../usuario01/imagens/SemFoto.png'}" alt="${nome}" style="max-width: 100px;">                            </div>
+                          <div>
+                            <h3>${nome}</h3>
+                            <p><i class="fas fa-map-marker-alt"></i> ${endereco}</p>
+                            <a href="/usuario01/mostraProduto/${estabelecimento.id_estabelecimento}" class="card-button">Ver Produtos</a>
+                          </div>
+                        </div>
+                      `,
+                      });
+
+                      marker.addListener('click', function () {
+                        if (previousInfoWindow) {
+                          previousInfoWindow.close();
+                        }
+
+                        infowindow.open(map, marker);
+                        previousInfoWindow = infowindow;
+                      });
+                    }
+                  });
+                });
+              })
+              .catch((error) => {
+                console.error('Erro ao buscar dados do servidor:', error);
+              });
+          });
+        } else {
+          console.error('Geolocalização não suportada pelo navegador.');
+        }
+      }
+    </script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&libraries=places&callback=initMap">
+    </script>
+    <%- include('script'); %>
+  </body>
+
+  </html>

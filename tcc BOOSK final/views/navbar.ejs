@@ -1,0 +1,40 @@
+
+<style>
+    .img-hover-scale:hover {
+        transform: scale(1.05);
+        transition: transform 0.2s ease;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-light" class="position-fixed" style="background-color:#42ebcc;">
+    <button type="button" style="margin-left: 30px;" id="sidebarCollapse" class="btn btn-outline-light navbar-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <button class="btn btn-outline-light d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fas fa-align-justify"></i>
+    </button>
+
+    <div class="container-fluid">
+        <img src="../../usuario01/imagens/BOOSK.png" style="margin-left: 160px;" height="120px" width="250px" class="img-hover-scale">
+
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-2" style="margin-right: 100px;">
+                <form action="/usuario01/pesquisar" method="POST" class="form-inline mr-auto">
+                    <div class="input-group">
+                        <input name="palavraChave" class="form-control mr-sm-2" type="text" placeholder="Buscar por produtos" required>
+                        <div class="input-group-append">
+                            <button type="reset" class="btn btn-outline-light" ><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-light ml-2"><i class="fas fa-search"></i></button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </ul>
+        </div>
+    </div>
+</nav>
